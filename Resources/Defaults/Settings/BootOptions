@@ -11,7 +11,7 @@
 #ClockMode=GMT
 ClockMode=LocalTime
 
-ConsoleFont=/Files/Fonts/Console/lode-lat1u-16.psf.gz
+ConsoleFont=/Data/Fonts/Console/lode-lat1u-16.psf.gz
 
 KeymapLayout=br-abnt2
 #KeymapLayout=us
