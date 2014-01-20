@@ -1,9 +1,9 @@
 #!/bin/sh
-Exec "Remounting root file system..."          mount -n -o remount,rw /
-Exec "Cleaning mtab and boot settings..."      rm -f "$goboSettings/mtab"*
-Exec "Cleaning up any stale lock files..."     eval "find $goboVariable/{run,lock}/ -type f | grep -v utmp | xargs -i rm -rf {}; rm -rf  $goboTemp/.X*-lock"
-Exec "Mounting system filesystems..."          mount -a -t sysfs
-Exec "Starting Udev..."                        Udev Start
+Exec "Remounting root file system..."         mount -n -o remount,rw /
+Exec "Cleaning mtab and boot settings..."     rm -f "$goboSettings/mtab"*
+Exec "Cleaning up any stale lock files..."    eval "find $goboVariable/{run,lock}/ -type f | grep -v utmp | xargs -i rm -rf {}; rm -rf  $goboTemp/.X*-lock"
+Exec "Mounting system filesystems..."         mount -a -t sysfs
+Exec "Starting Udev..."                       Udev Start
 
 Daemon                                        klogd -n
 Daemon                                        syslogd -n -m 0
@@ -25,9 +25,8 @@ Exec "Removing one-time boot settings..."     rm -f $goboSettings/nologin /fastb
 
 #Exec "Starting PCMCIA daemon..."             PCMCIA Start
 Exec "Initializing network..."                Network Start
-#Exec "Starting ssh daemon..."		      OpenSSH Start
+#Exec "Starting ssh daemon..."		          OpenSSH Start
 Exec "Mounting network file systems..."       mount -a -t nfs,smbfs,cifs
-#Exec "Loading sound settings..."              Alsactl Start
+#Exec "Loading sound settings..."             Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
-Exec "Starting hardware abstraction layer..." HAL Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"

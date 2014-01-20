@@ -1,11 +1,10 @@
 #!/bin/sh
 
 #Exec "Stopping mouse driver"                 Mouse Stop
-#Exec "Storing sound settings"                 Alsactl Stop
-Exec "Stopping hardware abstraction layer..." HAL Stop
+#Exec "Storing sound settings"                Alsactl Stop
 Exec "Saving system time"                     SetClock Stop
-Exec "Stopping kernel log daemon"            killall klogd
-Exec "Stopping system log daemon"            killall syslogd
+Exec "Stopping kernel log daemon"             killall klogd
+Exec "Stopping system log daemon"             killall syslogd
 Exec "Unmounting network file systems"        umount -a -r -t nfs,smbfs,cifs
 Exec "Stopping network"                       Network Stop "$NetworkInterfaces"
 Exec "Sending all processes the TERM signal"  killall5 -15
