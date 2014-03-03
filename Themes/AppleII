@@ -86,9 +86,9 @@ ThemeInit() {
    clear
    Color $Black $White
    FillBox 1 1 $[COLUMNS] $[ROWS] "@" 
-   usleep 250000
+   sleep 0.250000
    DisplayBanner
-   usleep 250000
+   sleep 0.250000
    GotoXY 1 $ROWS
    echo "]NEW"
    echo "]5 TEXT: NORMAL: HOME"

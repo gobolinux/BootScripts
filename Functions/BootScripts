@@ -177,7 +177,7 @@ WaitBackend() {
    shift
    local waited=0
    while ! [ -e "$ForksDir/$id" -a "$waited" -lt "$TimeOut" ]
-   do usleep "$BusyWait"
+   do sleep "0.$BusyWait"
       waited=$[waited+1]
    done
    if [ "$waited" = "$TimeOut" ]

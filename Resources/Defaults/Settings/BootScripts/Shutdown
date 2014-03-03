@@ -8,7 +8,7 @@ Exec "Stopping system log daemon"             killall syslogd
 Exec "Unmounting network file systems"        umount -a -r -t nfs,smbfs,cifs
 Exec "Stopping network"                       Network Stop "$NetworkInterfaces"
 Exec "Sending all processes the TERM signal"  killall5 -15
-usleep 500000
+sleep 0.500000
 Exec "Sending all processes the KILL signal"  killall5 -9
 Exec "Removing login records"                 rm -f ${goboVariable}/run/utmp
 Exec "Deactivating all swap files/partitions" swapoff -a
