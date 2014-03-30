@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # see MountProc for docs :) [hisham]
-mountpoint=/System/Kernel/Objects
+mountpoint=/sys
 fs=sysfs
 grep -q "$fs $mountpoint" /System/Settings/mtab || mount "$mountpoint"
