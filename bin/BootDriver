@@ -20,6 +20,11 @@ export PATH="$PATH":/System/Links/Tasks:${goboSettings}/BootScripts
 modescript="$1"
 
 mount ${goboStatus} &> /dev/null
+mount ${goboObjects} &> /dev/null
+mountpoint -q /System/Kernel/Status  || mount --rbind ${goboStatus}  /System/Kernel/Status
+mountpoint -q /System/Kernel/Devices || mount --rbind ${goboDevices} /System/Kernel/Devices
+mountpoint -q /System/Kernel/Objects || mount --rbind ${goboObjects} /System/Kernel/Objects
+
 cmdline=`cat ${goboStatus}/cmdline`" "
 while [ "$cmdline" ]
 do
@@ -47,5 +52,5 @@ source "$theme"
 
 ThemeInit
 ThemeFile "$modescript"
-source /System/Settings/BootScripts/"$modescript"
-ThemeFinish "/System/Settings/issue"
+source ${goboSettings}/BootScripts/"$modescript"
+ThemeFinish "${goboSettings}/issue"
