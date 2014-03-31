@@ -12,7 +12,7 @@ source ${BootScriptsDir}/Functions/ConsoleToolkit
 mode="${1}"
 runlevel="${2}"
 
-[[ -e "/System/Kernel/Devices/fb/0" ]] && framebuffer="yes"
+[[ -e "${goboDevices}/fb/0" ]] && framebuffer="yes"
 
 gradient=( 4 3 1 5 7 9 10 2 6 8 11 )
 
@@ -206,9 +206,9 @@ countExecs()
     # A cheat that works on the common case
     if [[ "${PREVLEVEL}" = "N" ]]
     then
-        mode=/System/Settings/BootScripts/BootUp 
+        mode=${goboSettings}/BootScripts/BootUp 
     else
-        mode=/System/Settings/BootScripts/Shutdown
+        mode=${goboSettings}/BootScripts/Shutdown
     fi
 
     cat "${1}" ${mode} | sed 's/#.*$//g' | grep Exec | wc -l | awk '{ print $1 }'
@@ -325,8 +325,8 @@ ColorRed="echo -n ${CSI}1;37m"
 
 #### API ####
 
-ThemeStdoutStream=/System/Kernel/Devices/null
-ThemeStderrStream=/System/Kernel/Devices/null
+ThemeStdoutStream=${goboDevices}/null
+ThemeStderrStream=${goboDevices}/null
 
 ThemeFile()
 {

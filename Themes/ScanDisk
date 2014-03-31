@@ -27,7 +27,7 @@ DisplayBanner() {
       echo ${mem##*:}
    }
 
-   echo -n "GoboLinux "`cat /System/Settings/GoboLinuxVersion`" "
+   echo -n "GoboLinux "`cat ${goboSettings}/GoboLinuxVersion`" "
    uname -m
    echo -n "Linux kernel version "
    uname -r
@@ -46,7 +46,7 @@ ThemeInit() {
    clear
    Color $Cyan $Blue Bold
    echo -n "GoboLinux "
-   cat /System/Settings/GoboLinuxVersion
+   cat ${goboSettings}/GoboLinuxVersion
    FillLineWith "-"
    GotoXY 1 $[ROWS-2]
    FillLineWith "-"

@@ -9,7 +9,7 @@ source $BootScriptsDir/Functions/ConsoleToolkit
 mode="$1"
 runlevel="$2"
 
-[ -e "/System/Kernel/Devices/fb/0" ] && framebuffer="yes"
+[ -e "${goboDevices}/fb/0" ] && framebuffer="yes"
 
 gradient=(4 3 1 5 7 9 10 2 6 8 11)
 
@@ -46,7 +46,7 @@ done
 function countExecs() {
    local mode
    # a cheat that works on the common case
-   [ "$PREVLEVEL" = "N" ] && mode=/System/Settings/BootScripts/BootUp || mode=/System/Settings/BootScripts/Shutdown
+   [ "$PREVLEVEL" = "N" ] && mode=${goboSettings}/BootScripts/BootUp || mode=${goboSettings}/BootScripts/Shutdown
    cat "$1" $mode | sed 's/#.*$//g' | grep Exec | wc -l | awk '{ print $1 }'
 }
 
