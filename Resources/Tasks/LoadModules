@@ -8,6 +8,6 @@ then
    for m in "${UserDefinedModules[@]}"
    do
       # eval is used so that m can look like "foo='bar baz' bar=qux"
-      eval modprobe "$m"
+      [ ! -z "$m" ] && eval modprobe "$m" || true
    done
 fi
