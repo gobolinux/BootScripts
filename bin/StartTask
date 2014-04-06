@@ -15,7 +15,7 @@ scriptDescription="Run boot tasks from the command line."
 scriptCredits="Released under the GNU GPL."
 helpOnNoArguments=yes
 scriptUsage="<task> <options>"
-scriptExample="Network start"
+scriptExample="OpenSSH start"
 #Parse_Options "$@"
 
 ### Operation #################################################################

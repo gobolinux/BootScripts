@@ -5,7 +5,7 @@ Exec "Cleaning up any stale lock files..."    eval "find $goboVariable/{run,lock
 Exec "Mounting system filesystems..."         mount -a -t sysfs
 Exec "Starting Udev..."                       Udev Start
 
-Daemon                                        klogd -n
+Daemon                                        klogd -n -c 1
 Daemon                                        syslogd -n -m 0
 
 Exec "Checking remaining file systems..."     fsck -p -C -T -A -R
@@ -24,7 +24,7 @@ Exec "Creating utmp and wtmp..."              CreateChmod 644 $goboVariable/{run
 Exec "Removing one-time boot settings..."     rm -f $goboSettings/nologin /fastboot /forcefsck
 
 #Exec "Starting PCMCIA daemon..."             PCMCIA Start
-Exec "Initializing network..."                Network Start
+Exec "Initializing network..."                NetworkManager
 #Exec "Starting ssh daemon..."		          OpenSSH Start
 Exec "Mounting network file systems..."       mount -a -t nfs,smbfs,cifs
 #Exec "Loading sound settings..."             Alsactl Start
