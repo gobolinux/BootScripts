@@ -53,7 +53,7 @@ CoolWrite() {
          Cursor Restore
          x=$[x+1]
       fi
-      sleep 0.25000
+      sleep 0.01
    done
 }
 

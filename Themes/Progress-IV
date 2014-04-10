@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# This is a forked version of the 'Progress-II' theme for BootScripts.
-# It can display the polychromatic GoboLinux logo of the
-# 'Progress' theme. Moreover, it puts a monochromatic GoboLinux logo
-# in the console login screen.
-#
-# Written by Laercio Benedito de Sousa Junior (lbsousajr@gmail.com)
+# By Hisham Muhammad (hisham@gobolinux.org)
+# Based on Progress-III by Laercio Benedito de Sousa Junior (lbsousajr@gmail.com)
+# which is based on Progress-II by Hisham Muhammad (hisham@gobolinux.org)
 
 source ${BootScriptsDir}/Functions/ConsoleToolkit
 
@@ -80,56 +77,6 @@ pX=( "       "
      "  ${CSI}1;31;46m${SU}${CSI}32m${SU}${CSI}22;36;42m${SU}${CSI}0m  "
      "${CSI}30m${SD}${CSI}32;46m${SU}${CSI}30;40m${SU} ${CSI}22;36m${SU}${CSI}1;30;46m${SU}${CSI}33;40m${SD}${CSI}0m" )
 
-# Monochromatic letters for GoboLinux logo (for use in boot screen and/or login screen).
-
-G=( "${SD}${SUD}${SU}${SU}${SU}${SU}${SU}"
-    "${SUD}${SUD}     "
-    "${SUD}${SUD} ${SU}${SU}${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SU}${SUD}${SD}${SD}${SD}${SUD}${SUD}" )
-
-O=( "       "
-    " ${SD}${SD}${SD}${SD}${SD} "
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SU}${SUD}${SD}${SD}${SD}${SUD}${SU}" )
-
-B=( "${SUD}${SUD}     "
-    "${SUD}${SUD}${SD}${SD}${SD}${SD} "
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}${SD}${SD}${SD}${SUD}${SU}" )
-
-L=( "${SUD}${SUD}    "
-    "${SUD}${SUD}    "
-    "${SUD}${SUD}    "
-    "${SUD}${SUD}    "
-    "${SUD}${SUD}${SD}${SD}${SD}${SD}" )
-
-I=( "${SUD}${SUD}"
-    "${SD}${SD}"
-    "${SUD}${SUD}"
-    "${SUD}${SUD}"
-    "${SUD}${SUD}" )
-
-N=( "       "
-    "${SD}${SD}${SD}${SD}${SD}${SD} "
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}" )
-
-U=( "       "
-    "${SD}${SD}   ${SD}${SD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SUD}${SUD}   ${SUD}${SUD}"
-    "${SU}${SUD}${SD}${SD}${SD}${SUD}${SUD}" )
-
-X=( "       "
-    "${SD}${SD}   ${SD}${SD}"
-    " ${SU}${SUD}${SD}${SUD}${SU} "
-    "  ${SUD}${SUD}${SUD}  "
-    "${SD}${SUD}${SU} ${SU}${SUD}${SD}" )
-
 ##########
 #
 # UI elements
@@ -147,19 +94,28 @@ DrawLogo()
 
     echo -n "${CSI}K${ESC}(U"
 
-    for (( k = 0; k < ${#G[@]}; k++ ))
+    for (( k = 0; k < 5; k++ ))
     do
         echo -n "${spaces}"
-
-        if [[ "${1}" == "Poly" ]]
-        then
-            echo "${pG[k]}${pO[k]}${pB[k]}${p_O[k]}${pL[k]}${pI[k]}${pN[k]}${pU[k]}${pX[k]}"
-        else
-            echo "${G[k]} ${O[k]} ${B[k]} ${O[k]} ${L[k]} ${I[k]} ${N[k]} ${U[k]} ${X[k]}"
-        fi
+        echo "${pG[k]}${pO[k]}${pB[k]}${p_O[k]}${pL[k]}${pI[k]}${pN[k]}${pU[k]}${pX[k]}"
     done
 
     echo "${ESC}(B"
+}
+
+UpdatePalette()
+{
+    if (( ${1} >= 10 )); then SetPalette 1 "6f75c0"; fi # For ${CSI}0;31m
+    if (( ${1} >= 9 )); then SetPalette 2 "6fc0b4"; fi # For ${CSI}0;32m
+    if (( ${1} >= 8 )); then SetPalette 3 "7c6fc0"; fi # For ${CSI}0;33m
+    if (( ${1} >= 7 )); then SetPalette 4 "8e6fc0"; fi # For ${CSI}0;34m
+    if (( ${1} >= 6 )); then SetPalette 5 "6f87c0"; fi # For ${CSI}0;35m
+    if (( ${1} >= 5 )); then SetPalette 6 "6fc0a2"; fi # For ${CSI}0;36m
+    if (( ${1} >= 4 )); then SetPalette 7 "6f98c0"; fi # For ${CSI}0;37m
+    if (( ${1} >= 3 )); then SetPalette 8 "6fc090"; fi # For ${CSI}1;30m
+    if (( ${1} >= 2 )); then SetPalette 9 "6faac0"; fi # For ${CSI}1;31m
+    if (( ${1} >= 1 )); then SetPalette a "6fbcc0"; fi # For ${CSI}1;32m
+    if (( ${1} >= 0 )); then SetPalette b "6fc07f"; fi # For ${CSI}1;33m
 }
 
 DrawTopLogo()
@@ -168,33 +124,27 @@ DrawTopLogo()
 
     ResetPalette
     SetPalette 0 "000000" # For ${CSI}0;30m
-    SetPalette 1 "6f75c0" # For ${CSI}0;31m
-    SetPalette 2 "6fc0b4" # For ${CSI}0;32m
-    SetPalette 3 "7c6fc0" # For ${CSI}0;33m
-    SetPalette 4 "8e6fc0" # For ${CSI}0;34m
-    SetPalette 5 "6f87c0" # For ${CSI}0;35m
-    SetPalette 6 "6fc0a2" # For ${CSI}0;36m
-    SetPalette 7 "6f98c0" # For ${CSI}0;37m
-    SetPalette 8 "6fc090" # For ${CSI}1;30m
-    SetPalette 9 "6faac0" # For ${CSI}1;31m
-    SetPalette a "6fbcc0" # For ${CSI}1;32m
-    SetPalette b "6fc07f" # For ${CSI}1;33m
+
+    SetPalette 1 "000000" # For ${CSI}0;31m
+    SetPalette 2 "000000" # For ${CSI}0;32m
+    SetPalette 3 "000000" # For ${CSI}0;33m
+    SetPalette 4 "000000" # For ${CSI}0;34m
+    SetPalette 5 "000000" # For ${CSI}0;35m
+    SetPalette 6 "000000" # For ${CSI}0;36m
+    SetPalette 7 "000000" # For ${CSI}0;37m
+    SetPalette 8 "000000" # For ${CSI}1;30m
+    SetPalette 9 "000000" # For ${CSI}1;31m
+    SetPalette a "000000" # For ${CSI}1;32m
+    SetPalette b "000000" # For ${CSI}1;33m
+    UpdatePalette "$1"
+
     SetPalette c "000000" # For ${CSI}1;34m
     SetPalette d "808080" # For ${CSI}1;35m
-    SetPalette e "ffff00" # For ${CSI}1;36m
-    SetPalette f "ff0000" # For ${CSI}1;37m
+    SetPalette e "cccc80" # For ${CSI}1;36m
+    SetPalette f "cc8080" # For ${CSI}1;37m
 
     # Replace 'Poly' with 'Mono' to get a monochromatic logo in boot screen.
-    DrawLogo Poly
-}
-
-DrawIssueLogo()
-{
-    echo "${CSI}22;36;40m"
-
-    # Don't replace 'Mono' with 'Poly' below!
-    # Otherwise, you'll get a very ugly logo in the console login screen!
-    DrawLogo Mono
+    DrawLogo
 }
 
 #########
@@ -225,19 +175,18 @@ PrintStatus()
 
         Warning )
             shift
-
-            # Here, ${FGBoldCyan} code corresponds to yellow color.
-            PrintAt 3 ${ROWS} "Passed: ${*}" ${FGYellow}
-
+            GotoXY 1 $(( STATUS_START + STATUS_SIZE ))
+            ${ColorYellow}
+            echo "Warning: ${*}"
             ${ColorWhite}
         ;;
-		
+                
         Failure )
             shift
 
-            # Here, ${FGBoldGray} code corresponds to red color.
-            PrintAt 3 ${ROWS} "Failed: ${*}" ${FGBoldGray}
-
+            GotoXY 1 $(( STATUS_START + STATUS_SIZE ))
+            ${ColorRed}
+            echo "Failed: ${*}"
             ${ColorWhite}
         ;;
     esac
@@ -265,7 +214,7 @@ Hex()
     letters=( "a" "b" "c" "d" "e" "f" )
     (( lo = ${1} % 16 ))
     (( hi = ( ${1} - lo ) / 16 ))
-	
+        
     for k in ${hi} ${lo}
     do
         if (( k >= 10 ))
@@ -294,7 +243,7 @@ UpdateProgress()
         then
             (( level = i * 255 / COLUMNS ))
             (( invlevel = ( COLUMNS - i ) * 255 / COLUMNS ))
-		
+                
             color=00$(Hex ${level})$(Hex ${invlevel})
             bar="${bar}${ESC}]Pc${color}${CSI}1;34m${SUD}"
         else
@@ -303,7 +252,7 @@ UpdateProgress()
                 bar="${bar}$(Set_FG_Color ${gradient[n]})"
                 (( n++ ))
             fi
-			
+                        
             bar="${bar}${SUD}"
         fi
     done
@@ -360,10 +309,19 @@ ThemeInit()
     # cheat:
     setfont "${ConsoleFont}"
 
-    DrawTopLogo
+    Cursor off
+
+    (
+    for (( step = 0; step <= 12; step++ ))
+    do
+       DrawTopLogo $step
+       sleep 0.025
+    done
+    )
+   
     GotoXY 1 $(( STATUS_START + STATUS_SIZE ))
     ${ColorWhite}
-    Cursor off
+    
     Cursor Save
     ScrollArea ${STATUS_START} $(( STATUS_START + STATUS_SIZE ))
 }
@@ -371,12 +329,12 @@ ThemeInit()
 ThemeFinish() {
     (
         clear | sed -e 's/'${ESC}'\[/'${CSI}'/g'
-	DrawIssueLogo
-	echo "${CSI}1;36mWelcome to GoboLinux $(cat ${goboSettings}/GoboLinuxVersion)."
-	echo
-	SystemInfo
-	echo "${CSI}22;36mTerminal......: ${CSI}1;34m\l"
-	echo "${CSI}1;33m"
+        echo "${CSI}22;36;40m"
+        echo "${CSI}1;36mWelcome to GoboLinux $(cat ${goboSettings}/GoboLinuxVersion)."
+        echo
+        SystemInfo
+        echo "${CSI}22;36mTerminal......: ${CSI}1;34m\l"
+        echo "${CSI}1;33m"
     ) > ${1}
 
     ${ColorWhite}
