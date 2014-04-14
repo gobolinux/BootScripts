@@ -15,6 +15,10 @@ ColorRed="echo -en \\033[1;31m"
 
 Interactive=no
 
+ThemeClear() {
+   clear
+}
+
 ThemeInit() {
    ThemeStdoutStream=/dev/null
    ThemeStderrStream=/dev/null

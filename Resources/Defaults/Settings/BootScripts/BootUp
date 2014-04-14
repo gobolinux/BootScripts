@@ -3,6 +3,7 @@ Exec "Remounting root file system..."         mount -n -o remount,rw /
 Exec "Cleaning mtab and boot settings..."     rm -f "$goboSettings/mtab"*
 Exec "Cleaning up any stale lock files..."    eval "find $goboVariable/{run,lock}/ -type f | grep -v utmp | xargs -i rm -rf {}; rm -rf  $goboTemp/.X*-lock"
 Exec "Starting Udev..."                       Udev Start
+ThemeClear
 
 Daemon                                        klogd -n -c 1
 Daemon                                        syslogd -n -m 0

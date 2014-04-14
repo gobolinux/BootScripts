@@ -59,6 +59,12 @@ CoolWrite() {
 
 ### Theme API ###
 
+ThemeClear() {
+   Cursor Off
+   clear
+   DisplayBanner
+}
+
 ThemeInit() {
    ThemeStdoutStream=/dev/null
    ThemeStderrStream=/dev/null

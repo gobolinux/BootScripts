@@ -63,6 +63,10 @@ ThemeFinish() {
    } > "$1"
 }
 
+ThemeClear() {
+   clear
+}
+
 ThemeInit() {
    fifo="${goboTemp}/BootScript.AppleII.theme.hack"
    mkfifo "$fifo" &> /dev/null

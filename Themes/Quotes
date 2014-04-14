@@ -95,6 +95,10 @@ function PrintFailureMessage()
 # Functions necessary to make the theme work
 #
 
+function ThemeClear() {
+   clear
+}
+
 function ThemeInit() {
    ThemeStdoutStream=/dev/console
    ThemeStderrStream=/dev/console
