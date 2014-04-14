@@ -281,6 +281,10 @@ ThemeAfter()
 
 ThemeClear()
 {
+    stty=$(stty -a | grep columns)
+    ROWS=$(expr match "$stty" ".*rows \([0-9]*\)")
+    COLUMNS=$(expr match "$stty" ".*columns \([0-9]*\)")
+
     (( scroll = ROWS / 5 ))
     (( STATUS_START = ROWS - ( scroll + 2 ) ))
     (( STATUS_SIZE = scroll ))
