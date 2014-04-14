@@ -27,5 +27,5 @@ Exec "Removing one-time boot settings..."     rm -f $goboSettings/nologin /fastb
 Exec "Mounting network file systems..."       mount -a -t nfs,smbfs,cifs
 #Exec "Loading sound settings..."             Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
-Exec "Initializing network..."                NetworkManager
+Exec "Initializing network..."                connmand
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
