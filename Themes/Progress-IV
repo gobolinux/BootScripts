@@ -9,8 +9,6 @@ source ${BootScriptsDir}/Functions/ConsoleToolkit
 mode="${1}"
 runlevel="${2}"
 
-[[ -e "${goboDevices}/fb/0" ]] && framebuffer="yes"
-
 gradient=( 4 3 1 5 7 9 10 2 6 8 11 )
 
 ESC=`echo -e "\033"` # Escape character
@@ -203,18 +201,18 @@ Hex()
     done
 }
 
-bar=""
-lastI=0
-n=0
-
 UpdateProgress()
 {
     (( ProgressPercent > 99 )) && ProgressPercent=99
     (( width = COLUMNS * ProgressPercent / 100 ))
     steps=${#gradient[@]}
     (( step = COLUMNS / steps ))
+    
+    [[ -e "/dev/fb0" ]] && framebuffer="yes"
 
-    for (( i = lastI; i < width; i++ ))
+    bar=""
+    n=0
+    for (( i = 0; i < width; i++ ))
     do
         if [[ "${framebuffer}" ]]
         then
@@ -234,7 +232,6 @@ UpdateProgress()
         fi
     done
 
-    (( lastI = width ))
     Cursor Save
     GotoXY 1 $(( ROWS - 1 ))
     echo -n "${CSI}0m${ESC}(U${bar}${CSI}0m${ESC}D"
