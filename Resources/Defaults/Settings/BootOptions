@@ -11,7 +11,7 @@
 #ClockMode=GMT
 ClockMode=LocalTime
 
-ConsoleFont=/Users/hisham/lode-2.0-lat1u-16.psfu
+ConsoleFont=/System/Index/share/consolefonts/lode-2.0-lat1u-16.psfu
 
 KeymapLayout=br-abnt2
 #KeymapLayout=us

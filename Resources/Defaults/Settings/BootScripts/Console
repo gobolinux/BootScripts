@@ -2,5 +2,5 @@
 
 source BootUp
 
-Exec "Setting console font"                   setfont "$ConsoleFont"
+Exec "Setting console font"                   SetFont "$ConsoleFont"
 #Exec "Starting console mouse GPM..."          Mouse Start
