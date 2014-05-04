@@ -164,5 +164,5 @@ SetFont() {
    setfont "$1"
    # Select user font mapping, needed for non-ISO-8859-1
    # see man console_codes
-   echo -en "\033(K" > /dev/console
+   echo -en "\033(K" > /dev/tty1
 }
