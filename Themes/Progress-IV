@@ -289,7 +289,7 @@ ThemeClear()
     clear
 
     # cheat:
-    setfont "${ConsoleFont}"
+    SetFont "${BootScriptsDir}/Themes/Progress-IV.psf"
 
     Cursor off
 
