@@ -17,5 +17,6 @@ then
 else
    hwclockMode="--localtime"
 fi
-hwclock $option $hwclockMode
 
+mkdir -p $goboVariable/lib/hwclock
+hwclock $option $hwclockMode
