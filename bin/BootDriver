@@ -19,11 +19,12 @@ ForksDir=${goboVariable}/BootScripts
 export PATH="$PATH":${goboTasks}:${goboSettings}/BootScripts
 modescript="$1"
 
-mount ${goboStatus} &> /dev/null
-mount ${goboObjects} &> /dev/null
-mountpoint -q /System/Kernel/Status  || mount --rbind ${goboStatus}  /System/Kernel/Status
-mountpoint -q /System/Kernel/Devices || mount --rbind ${goboDevices} /System/Kernel/Devices
-mountpoint -q /System/Kernel/Objects || mount --rbind ${goboObjects} /System/Kernel/Objects
+mountpoint -q /proc || mount /proc
+mountpoint -q /sys  || mount /sys
+mountpoint -q /dev  || mount /dev
+mountpoint -q ${goboStatus}  || mount --rbind /proc ${goboStatus}
+mountpoint -q ${goboDevices} || mount --rbind /dev  ${goboDevices}
+mountpoint -q ${goboObjects} || mount --rbind /sys  ${goboObjects}
 
 cmdline=`cat ${goboStatus}/cmdline`" "
 while [ "$cmdline" ]
