@@ -22,11 +22,11 @@ Exec "Loading user-defined kernel modules..." LoadModules
 Exec "Creating utmp and wtmp..."              CreateChmod 644 $goboVariable/{run/utmp,log/wtmp}
 Exec "Removing one-time boot settings..."     rm -f $goboSettings/nologin /fastboot /forcefsck
 
+Exec "Configuring loopback device..."         ifconfig lo 127.0.0.1
 #Exec "Starting PCMCIA daemon..."             PCMCIA Start
 #Exec "Starting ssh daemon..."		          OpenSSH Start
 Exec "Mounting network file systems..."       mount -a -t nfs,smbfs,cifs
 Exec "Loading sound settings..."              Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
 Exec "Configuring power settings..."          PowerTOP Start
-Exec "Initializing network..."                GoboNet Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
