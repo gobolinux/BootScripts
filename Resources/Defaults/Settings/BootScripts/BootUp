@@ -1,8 +1,15 @@
 #!/bin/sh
-Exec "Remounting root file system..."         mount -o remount,rw /
-Exec "Cleaning mtab and boot settings..."     rm -f "$goboSettings/mtab"*; ln -s /proc/mounts "$goboSettings/mtab"
-Exec "Cleaning up any stale lock files..."    eval "find $goboVariable/{run,lock}/ -type f | grep -v utmp | xargs -i rm -rf {}; rm -rf  $goboTemp/.X*-lock"
-Exec "Starting Udev..."                       Udev Start
+
+# Remount root file system read-write
+ThemeClear
+mount -n -o remount,rw /
+
+# Make mtab a symlink to /proc/mounts
+rm -f "$goboSettings/mtab"*
+ln -s /proc/mounts "$goboSettings/mtab"
+
+# Launch udev
+Udev Start
 ThemeClear
 
 Daemon                                        klogd -n -c 1
@@ -11,22 +18,29 @@ Daemon                                        syslogd -n -m 0
 Exec "Checking remaining file systems..."     fsck -p -C -T -A -R
 Exec "Hiding legacy tree..."                  GoboHide Start
 Exec "Setting clock..."                       SetClock Start
-Exec "Mounting local file systems..."         mount -a -f -t nonfs,nosmbfs,nocifs,noproc,noswap,nodevpts,nosysfs; mount /dev/shm
-Exec "Activating all swap files/partitions..." swapon -a
-Exec "Linking kernel modules directory..."    ln -nfs "$goboModules"/`uname -r` "$goboLibraries"/modules/`uname -r`
+Exec "Mounting local file systems..."         mount -a -f -t nonfs,nosmbfs,nocifs,noproc,noswap,nodevpts,nosysfs
+
+# Mount pseudo-filesystems
+mount /System/Kernel/Objects
+mount /System/Kernel/Status
+mount /System/Kernel/Devices
+mount /dev/shm
+
+# Configure loopback device
+ifconfig lo 127.0.0.1
+
+Exec "Activating all swap files/partitions..." swapon -a &
 Exec "Setting hostname to $HostName..."       hostname "$HostName"
 
 [ "${UserDefinedModules[*]}" ] && \
 Exec "Loading user-defined kernel modules..." LoadModules
 
 Exec "Creating utmp and wtmp..."              CreateChmod 644 $goboVariable/{run/utmp,log/wtmp}
-Exec "Removing one-time boot settings..."     rm -f $goboSettings/nologin /fastboot /forcefsck
-
-Exec "Configuring loopback device..."         ifconfig lo 127.0.0.1
 #Exec "Starting PCMCIA daemon..."             PCMCIA Start
-#Exec "Starting ssh daemon..."		          OpenSSH Start
-Exec "Mounting network file systems..."       mount -a -t nfs,smbfs,cifs
+#Exec "Starting ssh daemon..."		      OpenSSH Start
+#Exec "Mounting network file systems..."      mount -a -t nfs,smbfs,cifs
 Exec "Loading sound settings..."              Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
+Exec "Starting ACPI daemon..."                Acpid Start
 Exec "Configuring power settings..."          PowerTOP Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
