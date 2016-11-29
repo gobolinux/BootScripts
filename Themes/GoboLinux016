@@ -1,0 +1,283 @@
+#!/bin/bash
+
+# GoboLinux016, based on the various Progress themes
+
+source $BootScriptsDir/Functions/ConsoleToolkit
+
+ESC=`echo -e "\033"` # Escape character
+CSI=`echo -e "\033["` # Control Sequence Introducer; equivalent to ${ESC}[
+
+CLREOL="${CSI}K"
+COLOR1="${CS!}0;31m"
+
+
+SB="█" # square up & down
+SD="▄"  # square down
+SU="▀"  # square up
+
+mode="$1"
+runlevel="$2"
+
+[[ -e "${goboDevices}/fb/0" ]] && framebuffer="yes"   
+[[ -e "/dev/fb0" ]] && framebuffer="yes"
+
+gradient=(4 3 1 5 7 9 10 2 6 8 11)
+
+banner=(
+"  ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄▄▄                            ▄▄▄▄            ▄▄▄▄"
+"▄▄▄▄                            ▄▄▄▄                            ▄▄▄▄            ▄▄▄▄"
+"▄▄▄▄                            ▄▄▄▄                            ▄▄▄▄"
+"▄▄▄▄              ▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄            ▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  "
+"▄▄▄▄  ▄▄▄▄▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄            ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄    ▄▄▄▄  ▄▄▄▄"
+"▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄            ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄      ▄▄▄▄▄▄  "
+"▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄            ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄      ▄▄▄▄▄▄"
+"▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄            ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄      ▄▄▄▄▄▄"
+"▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄            ▄▄▄▄  ▄▄▄▄      ▄▄▄▄  ▄▄▄▄      ▄▄▄▄    ▄▄▄▄  ▄▄▄▄  "
+"  ▄▄▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄  ▄▄▄▄      ▄▄▄▄    ▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄      ▄▄▄▄"
+)
+
+
+##########
+#
+# UI elements
+#
+##########
+
+function DrawTopLogo() {
+   local y
+   (( y = ROWS / 2 - 2 ))
+   
+   echo -n "${ESC}(U"
+   
+   if [[ "$COLUMNS" -gt 80 ]]
+   then
+      halfwidth=64
+   
+      spaces=""
+      for (( i = 0 ; i < COLUMNS/2-$halfwidth; i++ ))
+      do spaces=" $spaces"
+      done
+      
+      local delay
+      delay=0.04
+      echo "${CSI}1;37m"
+      GotoXY 1 $[y+4]; echo "${spaces}${banner[4]}"
+      GotoXY 1 $[y+5]; echo "${spaces}${banner[5]}"
+      sleep $delay
+      echo "${CSI}0;32m"
+      GotoXY 1 $[y+3]; echo "${spaces}${banner[3]}"
+      GotoXY 1 $[y+6]; echo "${spaces}${banner[6]}"
+      sleep $delay
+      echo "${CSI}0;33m"
+      GotoXY 1 $[y+2]; echo "${spaces}${banner[2]}"
+      GotoXY 1 $[y+7]; echo "${spaces}${banner[7]}"
+      sleep $delay
+      echo "${CSI}0;34m"
+      GotoXY 1 $[y+1]; echo "${spaces}${banner[1]}"
+      GotoXY 1 $[y+8]; echo "${spaces}${banner[8]}"
+      sleep $delay
+      echo "q${CSI}0;35m"
+      GotoXY 1 $[y+0]; echo "${spaces}${banner[0]}"
+      GotoXY 1 $[y+9]; echo "${spaces}${banner[9]}"
+   
+   fi
+   
+   echo "${ESC}(B"
+
+}
+
+#########
+
+function Is_Bold() {
+   [[ "$1" -ge 8 ]]
+}
+
+function Set_FG_Color() {
+   if ! Is_Bold "$1"
+   then
+     echo -n "\033[0;"$[30+$1]"m"
+   else
+     echo -n "\033[1;"$[22+$1]"m"
+   fi
+}
+
+function Hex() {
+   letters=("a" "b" "c" "d" "e" "f")
+   lo=$[$1 % 16]
+   hi=$[($1 - lo) / 16]
+   if [ "$hi" -ge 10 ]
+   then echo -n ${letters[$[hi-10]]}
+   else echo -n $hi
+   fi
+   if [ "$lo" -ge 10 ]
+   then echo -n ${letters[$[lo-10]]}
+   else echo -n $lo
+   fi
+}
+
+ColorPercent() {
+   local percent
+   percent="$1"
+   if [[ "${framebuffer}" ]]
+   then
+      local level
+      local invlevel
+      (( level = (percent * 255) / 100 ))
+      (( invlevel = ( 100 - percent ) * 255 / 100 ))
+      echo "${ESC}]Pc00$(Hex ${level})$(Hex ${invlevel})${CSI}1;34m"
+   else
+      local step
+      local steps
+      steps=${#gradient[@]}
+      (( step = (steps * percent) / 100 ))
+      Set_FG_Color ${gradient[step]}
+   fi
+}
+
+#UpdateProgress()
+#{
+#   (( ProgressPercent > 99 )) && ProgressPercent=99
+#   (( width = COLUMNS * ProgressPercent / 100 ))
+#
+#   local bar
+#   local percent
+#   local n
+#   bar=""
+#   n=0
+#   for (( i = 0; i < width; i++ ))
+#   do
+#      color="$(ColorPercent $[ i * 100 / COLUMNS ])"
+#      bar="${bar}${color}▄"
+#   done
+#
+#   Cursor Save
+#   GotoXY 1 $(( ROWS - 2 ))
+#   echo -n "${CSI}0m${ESC}(U${bar}${CSI}0m${ESC}D"
+#   Cursor Restore
+#}
+
+
+##### API #####
+
+ThemeStdoutStream=/dev/null
+ThemeStderrStream=/dev/null
+#ThemeStdoutStream=/dev/console
+#ThemeStderrStream=/dev/console
+
+ThemeFile() {
+   :
+}
+
+gradient=(
+   "${CSI}0;36m"
+   "${CSI}0;37m"
+   "${CSI}1;30m"
+   "${CSI}1;31m"
+   "${CSI}1;32m"
+   "${CSI}1;33m"
+   "${CSI}1;34m"
+   "${CSI}1;35m"
+   "${CSI}1;36m"
+   "${CSI}1;37m"
+)
+
+ThemeBefore() {
+   GotoXY 1 $[STATUS_START+STATUS_SIZE]
+   id=$1
+   shift
+   msg[$id]="$*"
+   local nmsg
+   nmsg="${#msg[@]}"
+   (( count = (nmsg < STATUS_SIZE) ? nmsg : STATUS_SIZE ))
+   (( start = nmsg - count ))
+   local y
+   local idx
+   (( y = STATUS_START + STATUS_SIZE - count ))
+   for (( i = $start; i < $count; i++ ))
+   do
+      GotoXY 1 $y
+      (( idx = y - (STATUS_START + STATUS_SIZE) ))
+      echo -n "${gradient[$idx]}"
+      echo -n "${msg[$i]}${CLREOL}"
+      (( y++ ))
+   done
+}
+
+ThemeAfter() {
+   if [[ $2 -gt 0 ]]
+   then
+      msg[$1]="${msg[$1]} ${CSI}0m${CSI}41;30m failed ${CSI}0m"
+      ThemeBefore
+   fi
+   return $ExecReturn
+}
+
+ThemeClear()
+{
+   ResetPalette
+
+   clear
+
+   SetPalette 0 "000000" # For ${CSI}0;30m
+
+   SetPalette 1 "774040" # For ${CSI}0;31m
+
+   SetPalette 2 "00ddff" # For ${CSI}0;32m
+   SetPalette 3 "00bbff" # For ${CSI}0;33m
+   SetPalette 4 "0099ff" # For ${CSI}0;34m
+   SetPalette 5 "0077ff" # For ${CSI}0;35m
+   
+   SetPalette 6 "001919" # For ${CSI}0;36m
+   SetPalette 7 "003333" # For ${CSI}0;37m
+   SetPalette 8 "004c4c" # For ${CSI}1;30m
+   SetPalette 9 "006666" # For ${CSI}1;31m
+   SetPalette a "007f7f" # For ${CSI}1;32m
+   SetPalette b "009999" # For ${CSI}1;33m
+   SetPalette c "00b2b2" # For ${CSI}1;34m
+   SetPalette d "00cccc" # For ${CSI}1;35m
+   SetPalette e "00e5e5" # For ${CSI}1;36m
+   SetPalette f "00ffff" # For ${CSI}1;37m
+
+   stty=$(stty -a | grep columns)
+   ROWS=$(expr match "$stty" ".*rows \([0-9]*\)")
+   COLUMNS=$(expr match "$stty" ".*columns \([0-9]*\)")
+
+   (( scroll = ROWS / 5 ))
+   (( scroll = scroll > 10 ? 10 : scroll ))
+   (( STATUS_START = ROWS - ( scroll + 1 ) ))
+   (( STATUS_SIZE = scroll ))
+
+   # cheat:
+   setfont "$ConsoleFont"
+
+   DrawTopLogo
+
+   GotoXY 1 $[STATUS_START+STATUS_SIZE]
+   Cursor off
+   Cursor Save
+#   SetPalette "d" "808080"
+#   SetPalette "e" "ffff00"
+#   SetPalette "f" "ff0000"
+   ScrollArea $STATUS_START $[STATUS_START+STATUS_SIZE]
+}
+
+ThemeInit() {
+   ThemeClear
+}
+
+function ThemeFinish() {
+   (
+      clear
+      echo
+      echo -e "\033[36;1mWelcome to GoboLinux `cat ${goboSettings}/GoboLinuxVersion`."
+      echo
+      SystemInfo
+      echo -e "\033[36;22mTerminal......: \033[34;1m\l"
+      echo -e "\033[33;1m"
+   ) > $1
+   echo -en "\033[1;35m"
+   ScrollArea 0 ${ROWS}
+   Cursor on
+   clear
+   ResetPalette
+}
