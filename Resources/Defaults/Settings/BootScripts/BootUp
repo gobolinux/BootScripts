@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Remount root file system read-write
-ThemeClear
 mount -n -o remount,rw /
 
 # Make mtab a symlink to /proc/mounts
