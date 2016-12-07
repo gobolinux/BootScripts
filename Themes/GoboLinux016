@@ -186,12 +186,12 @@ ThemeBefore() {
    msg[$id]="$*"
    local nmsg
    nmsg="${#msg[@]}"
-   (( count = (nmsg < STATUS_SIZE) ? nmsg : STATUS_SIZE ))
-   (( start = nmsg - count ))
+   (( nshow = (nmsg < STATUS_SIZE) ? nmsg : STATUS_SIZE ))
+   (( start = nmsg - nshow ))
    local y
    local idx
-   (( y = STATUS_START + STATUS_SIZE - count ))
-   for (( i = $start; i < $count; i++ ))
+   (( y = STATUS_START + STATUS_SIZE - nshow ))
+   for (( i = start; i < start + nshow ; i++ ))
    do
       GotoXY 1 $y
       (( idx = y - (STATUS_START + STATUS_SIZE) ))
