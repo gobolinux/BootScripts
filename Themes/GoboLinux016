@@ -8,7 +8,7 @@ ESC=`echo -e "\033"` # Escape character
 CSI=`echo -e "\033["` # Control Sequence Introducer; equivalent to ${ESC}[
 
 CLREOL="${CSI}K"
-COLOR1="${CS!}0;31m"
+COLOR1="${CSI}0;31m"
 
 
 SB="█" # square up & down
