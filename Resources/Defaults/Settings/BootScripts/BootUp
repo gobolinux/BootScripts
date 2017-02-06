@@ -42,4 +42,5 @@ Exec "Loading sound settings..."              Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
 Exec "Starting ACPI daemon..."                Acpid Start
 Exec "Configuring power settings..."          PowerTOP Start
+Exec "Launching Listener daemon..."           Listener Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
