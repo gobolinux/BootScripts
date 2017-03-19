@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $BootScriptsDir/Functions/ConsoleToolkit
+
 #
 # "Quotes" GoboLinux Boot Script Theme
 #

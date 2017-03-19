@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $BootScriptsDir/Functions/ConsoleToolkit
+
 COLUMNS=$(stty size)
 COLUMNS=${COLUMNS##* }
 COL=$[ COLUMNS - 10 ]

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $BootScriptsDir/Functions/ConsoleToolkit
+
 ThemeInit() {
    ThemeStdoutStream=/dev/console
    ThemeStderrStream=/dev/console
