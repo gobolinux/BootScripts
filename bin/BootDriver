@@ -13,6 +13,15 @@ BootScriptsDir=/Programs/BootScripts/Current/
 source ${goboSettings}/BootOptions
 source ${BootScriptsDir}/Functions/BootScripts
 
+### Debugging
+
+if [ -n "$DEBUG" ]
+then
+   export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '
+   set -x
+   ${goboExecutables}/bootlogd -r -c -l ${goboVariable}/log/BootScripts.log
+fi
+
 ### Variables ###
 
 ForksDir=${goboVariable}/BootScripts
