@@ -1,10 +1,10 @@
 #!/bin/sh
 
 . ScriptFunctions
-Import GoboLinux.sh
 
 ### Changelog #################################################################
 
+# 06/04/2020 - No more verify superuser
 # 09/05/2004 - New task structure
 # 25/07/2003 - Modularized function library
 # 24/06/2002 - First version
@@ -20,7 +20,7 @@ scriptExample="OpenSSH start"
 
 ### Operation #################################################################
 
-Verify_Superuser "$@"
+[ -w "$goboPrograms" ] || Die "Needs privileged access."
 
 export PATH="$PATH:$goboTasks"
 
