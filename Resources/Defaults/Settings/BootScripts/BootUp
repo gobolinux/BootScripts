@@ -11,7 +11,6 @@ ln -s /proc/mounts "$goboSettings/mtab"
 Udev Start
 ThemeClear
 
-Daemon                                        klogd -n -c 1
 Daemon                                        syslogd -n -m 0
 
 Exec "Checking remaining file systems..."     fsck -p -C -T -A -R
