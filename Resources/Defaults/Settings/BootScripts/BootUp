@@ -23,6 +23,7 @@ mount /System/Kernel/Objects
 mount /System/Kernel/Status
 mount /System/Kernel/Devices
 mount /dev/shm
+mount /sys/firmware/efi/efivars
 
 # Configure loopback device
 ifconfig lo 127.0.0.1
@@ -34,12 +35,12 @@ Exec "Setting hostname to $HostName..."       hostname "$HostName"
 Exec "Loading user-defined kernel modules..." LoadModules
 
 Exec "Creating utmp and wtmp..."              CreateChmod 644 $goboVariable/{run/utmp,log/wtmp}
-#Exec "Starting PCMCIA daemon..."             PCMCIA Start
-#Exec "Starting ssh daemon..."		      OpenSSH Start
+#Exec "Starting ssh daemon..."		          OpenSSH Start
 #Exec "Mounting network file systems..."      mount -a -t nfs,smbfs,cifs
 Exec "Loading sound settings..."              Alsactl Start
 Exec "Starting message bus..."                MessageBus Start
 Exec "Starting ACPI daemon..."                Acpid Start
+Exec "Starting Bluetooth daemon..."           Bluetooth Start
 Exec "Configuring power settings..."          PowerTOP Start
 Exec "Launching Listener daemon..."           Listener Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
