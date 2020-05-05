@@ -1,6 +1,6 @@
 
 PROGRAM=BootScripts
-VERSION=svn-$(shell date +%Y%m%d)
+VERSION=git-$(shell date +%Y%m%d)
 PACKAGE_DIR=$(HOME)
 PACKAGE_FILE=$(PACKAGE_DIR)/$(PROGRAM)--$(VERSION)--$(shell uname -m).tar.bz2
 goboPrograms ?= /Programs
@@ -37,9 +37,9 @@ cleanup:
 	find * -path "*~" -or -path "*/.\#*" -or -path "*.bak" | xargs rm -f
 
 verify:
-	@svn update
-	@{ svn status 2>&1 | grep -v "Resources/SettingsBackup" | grep "^\?" ;} && { echo -e "Error: unknown files exist. Please take care of them first.\n"; exit 1 ;} || exit 0
-	@{ svn status 2>&1 | grep "^M" ;} && { echo -e "Error: modified files exist. Please checkin/revert them first.\n"; exit 1 ;} || exit 0
+	@git pull
+	#@{ git status --porcelain | grep -q "^??" ;} && { echo -e "Error: unknown files exist. Please take care of them first.\n"; exit 1 ;} || exit 0
+	#@{ git status --porcelain | grep -q "^M" ;} && { echo -e "Error: modified files exist. Please checkin/revert them first.\n"; exit 1 ;} || exit 0
 
 dist: version_check verify manuals tarball
 	@echo; echo "Press enter to create a subversion tag for version $(VERSION) or ctrl-c to abort."
@@ -47,13 +47,7 @@ dist: version_check verify manuals tarball
 	@make tag
 
 tag: version_check verify
-	svn cp http://svn.gobolinux.org/tools/trunk/$(PROGRAM) http://svn.gobolinux.org/tools/tags/$(SVNTAG) -m"Tagging $(PROGRAM) $(VERSION)"
-	@echo "Switching to tag (http://svn.gobolinux.org/tools/tags/$(SVNTAG))"
-	@svn switch http://svn.gobolinux.org/tools/tags/$(SVNTAG)
-	sed -i 's/^VERSION=.*/VERSION='"$(VERSION)"'/' Makefile
-	svn commit -m"Updating version in Makefile." Makefile
-	@echo "Switching back to trunk"
-	@svn switch http://svn.gobolinux.org/tools/trunk/$(PROGRAM)
+	@true
 
 tarball: all $(PACKAGE_FILE)
 	@echo; echo "Tarball at $(PACKAGE_FILE)"
@@ -66,7 +60,6 @@ $(PACKAGE_FILE): $(all_files)
 	cd $(PACKAGE_DIR); tar cvp $(PROGRAM)/$(VERSION) | bzip2 > $(PACKAGE_FILE)
 	rm -rf $(PACKAGE_DIR)/$(PROGRAM)/$(VERSION)
 	rmdir $(PACKAGE_DIR)/$(PROGRAM)
-	SignProgram $(PACKAGE_FILE)
 
 manuals: $(man_files)
 
