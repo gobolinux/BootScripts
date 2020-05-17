@@ -66,36 +66,61 @@ function DrawTopLogo() {
    then
       halfwidth=64
       banner=("${banner1[@]}")
+      c0="${CSI}0;32m"
+      c1="${CSI}0;32m"
+      c2="${CSI}0;33m"
+      c3="${CSI}0;33m"
+      c4="${CSI}0;34m"
+      c5="${CSI}0;34m"
+      c6="${CSI}0;35m"
+      c7="${CSI}0;35m"
+      c8="${CSI}1;37m"
+      c9="${CSI}1;37m"
    else
       halfwidth=33
       banner=("${banner2[@]}")
+      c0="${CSI}0;32m"
+      c1="${CSI}0;32m"
+      c2="${CSI}0;32m"
+      c3="${CSI}0;33m"
+      c4="${CSI}0;34m"
+      c5="${CSI}0;35m"
+      c6="${CSI}1;37m"
+      c7="${CSI}1;37m"
+      c8="${CSI}1;37m"
+      c9="${CSI}1;37m"
    fi
    
    spaces=""
    for (( i = 0 ; i < COLUMNS/2-$halfwidth; i++ ))
    do spaces=" $spaces"
    done
-   
+
    local delay
    delay=0.04
-   echo "${CSI}1;37m"
+   echo $c4
    GotoXY 1 $[y+4]; echo "${spaces}${banner[4]}"
+   echo $c5
    GotoXY 1 $[y+5]; echo "${spaces}${banner[5]}"
    sleep $delay
-   echo "${CSI}0;32m"
+   echo $c3
    GotoXY 1 $[y+3]; echo "${spaces}${banner[3]}"
+   echo $c6
    GotoXY 1 $[y+6]; echo "${spaces}${banner[6]}"
    sleep $delay
-   echo "${CSI}0;33m"
+   echo $c2
    GotoXY 1 $[y+2]; echo "${spaces}${banner[2]}"
+   echo $c7
    GotoXY 1 $[y+7]; echo "${spaces}${banner[7]}"
    sleep $delay
-   echo "${CSI}0;34m"
+   echo $c1
    GotoXY 1 $[y+1]; echo "${spaces}${banner[1]}"
+   echo $c8
    GotoXY 1 $[y+8]; echo "${spaces}${banner[8]}"
-   sleep $delay
-   echo "q${CSI}0;35m"
+   sleepn $delay
+   echo $c0
    GotoXY 1 $[y+0]; echo "${spaces}${banner[0]}"
+   echo $c9
    GotoXY 1 $[y+9]; echo "${spaces}${banner[9]}"
    
    echo "${ESC}(B"
@@ -186,6 +211,7 @@ ThemeFile() {
 
 gradient=(
    "${CSI}0;36m"
+   "${CSI}0;36m"
    "${CSI}0;37m"
    "${CSI}1;30m"
    "${CSI}1;31m"
@@ -194,7 +220,6 @@ gradient=(
    "${CSI}1;34m"
    "${CSI}1;35m"
    "${CSI}1;36m"
-   "${CSI}1;37m"
 )
 
 ThemeBefore() {
@@ -236,23 +261,39 @@ ThemeClear()
 
    SetPalette 0 "000000" # For ${CSI}0;30m
 
-   SetPalette 1 "774040" # For ${CSI}0;31m
+   SetPalette 1 "772020" # For ${CSI}0;31m
 
-   SetPalette 2 "00ddff" # For ${CSI}0;32m
-   SetPalette 3 "00bbff" # For ${CSI}0;33m
-   SetPalette 4 "0099ff" # For ${CSI}0;34m
-   SetPalette 5 "0077ff" # For ${CSI}0;35m
+#   SetPalette 2 "9966ff" # For ${CSI}0;32m
+#   SetPalette 3 "6699ff" # For ${CSI}0;33m
+#   SetPalette 4 "33ccff" # For ${CSI}0;34m
+#   SetPalette 5 "33ffcc" # For ${CSI}0;35m
+#   
+#   SetPalette 6 "002909" # For ${CSI}0;36m
+#   SetPalette 7 "054323" # For ${CSI}0;37m
+#   SetPalette 8 "0b5c3c" # For ${CSI}1;30m
+#   SetPalette 9 "107656" # For ${CSI}1;31m
+#   SetPalette a "158f6f" # For ${CSI}1;32m
+#   SetPalette b "1aa989" # For ${CSI}1;33m
+#   SetPalette c "1fc2a2" # For ${CSI}1;34m
+#   SetPalette d "25dcbc" # For ${CSI}1;35m
+#   SetPalette e "2af5d5" # For ${CSI}1;36m
+#   SetPalette f "33ff88" # For ${CSI}1;37m
+
+   SetPalette 2 "260c3f" # For ${CSI}0;32m
+   SetPalette 3 "0c263f" # For ${CSI}0;33m
+   SetPalette 4 "0c333f" # For ${CSI}0;34m
+   SetPalette 5 "0c3f33" # For ${CSI}0;35m
    
-   SetPalette 6 "001919" # For ${CSI}0;36m
-   SetPalette 7 "003333" # For ${CSI}0;37m
-   SetPalette 8 "004c4c" # For ${CSI}1;30m
-   SetPalette 9 "006666" # For ${CSI}1;31m
-   SetPalette a "007f7f" # For ${CSI}1;32m
-   SetPalette b "009999" # For ${CSI}1;33m
-   SetPalette c "00b2b2" # For ${CSI}1;34m
-   SetPalette d "00cccc" # For ${CSI}1;35m
-   SetPalette e "00e5e5" # For ${CSI}1;36m
-   SetPalette f "00ffff" # For ${CSI}1;37m
+   SetPalette 6 "000909" # For ${CSI}0;36m
+   SetPalette 7 "052323" # For ${CSI}0;37m
+   SetPalette 8 "0b4c3c" # For ${CSI}1;30m
+   SetPalette 9 "105656" # For ${CSI}1;31m
+   SetPalette a "156f6f" # For ${CSI}1;32m
+   SetPalette b "1a8989" # For ${CSI}1;33m
+   SetPalette c "1fa2a2" # For ${CSI}1;34m
+   SetPalette d "25bcbc" # For ${CSI}1;35m
+   SetPalette e "99ffff" # For ${CSI}1;36m
+   SetPalette f "0c3f26" # For ${CSI}1;37m
 
    stty=$(stty -a | grep columns)
    ROWS=$(expr match "$stty" ".*rows \([0-9]*\)")
