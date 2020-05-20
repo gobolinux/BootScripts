@@ -117,7 +117,7 @@ function DrawTopLogo() {
    GotoXY 1 $[y+1]; echo "${spaces}${banner[1]}"
    echo $c8
    GotoXY 1 $[y+8]; echo "${spaces}${banner[8]}"
-   sleepn $delay
+   sleep $delay
    echo $c0
    GotoXY 1 $[y+0]; echo "${spaces}${banner[0]}"
    echo $c9
