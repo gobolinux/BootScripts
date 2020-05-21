@@ -19,10 +19,6 @@ Exec "Setting clock..."                       SetClock Start
 Exec "Mounting local file systems..."         mount -a -f -t nonfs,nosmbfs,nocifs,noproc,noswap,nodevpts,nosysfs
 
 # Mount pseudo-filesystems
-mount /System/Kernel/Objects
-mount /System/Kernel/Status
-mount /System/Kernel/Devices
-mount /dev/shm
 mount /sys/firmware/efi/efivars
 
 # Configure loopback device
