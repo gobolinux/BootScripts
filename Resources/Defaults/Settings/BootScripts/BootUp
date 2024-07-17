@@ -40,3 +40,4 @@ Exec "Starting Bluetooth daemon..."           Bluetooth Start
 Exec "Configuring power settings..."          PowerTOP Start
 Exec "Launching Listener daemon..."           Listener Start
 Exec "Loading keymap..."                      loadkeys "$KeymapLayout"
+Exec "Starting loopback network interface..." ifconfig lo up
